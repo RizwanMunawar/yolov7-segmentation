@@ -109,3 +109,7 @@ python instance-segmentation.py --source 0
 python instance-segmentation.py --source 1
 ```
 - Output file will be created in the working directory with name ("your-file-name-without-extension"+"_segmentation.mp4")
+
+### RESULTS
+![Instance-Segmentation](https://user-images.githubusercontent.com/62513924/185704342-59cb9bce-6be1-432b-90fc-2064feed4a67.png)
+
