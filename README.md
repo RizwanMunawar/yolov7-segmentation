@@ -130,8 +130,6 @@ python instance-segmentation.py --source 1
  
 ## References
 - https://github.com/WongKinYiu/yolov7
-- https://github.com/augmentedstartups
-- https://learnopencv.com/yolov7-object-detection-paper-explanation-and-inference/
 - https://github.com/ultralytics/yolov5
 
 ## My Medium Articles
