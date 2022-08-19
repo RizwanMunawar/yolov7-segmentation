@@ -1,5 +1,4 @@
 # YOLOR general utils
-
 import glob
 import logging
 import math
@@ -21,7 +20,14 @@ import yaml
 from utils.google_utils import gsutil_getsize
 from utils.metrics import fitness
 from utils.torch_utils import init_torch_seeds
+
+from utils.torch_utils import is_parallel
+from torch.nn import functional as F
+from detectron2.structures.masks import BitMasks
 from detectron2.structures import Boxes
+from detectron2.layers.roi_align import ROIAlign
+from detectron2.utils.memory import retry_if_cuda_oom
+from detectron2.layers import paste_masks_in_image
 
 # Settings
 torch.set_printoptions(linewidth=320, precision=5, profile='long')
@@ -506,6 +512,23 @@ def box_giou(box1, box2):
     areai = whi[:, :, 0] * whi[:, :, 1]
 
     return iou - (areai - union) / areai
+
+def merge_bases(rois, coeffs, attn_r, num_b, location_to_inds=None):
+    # merge predictions
+    # N = coeffs.size(0)
+    if location_to_inds is not None:
+        rois = rois[location_to_inds]
+    N, B, H, W = rois.size()
+    if coeffs.dim() != 4:
+        coeffs = coeffs.view(N, num_b, attn_r, attn_r)
+    # NA = coeffs.shape[1] //  B
+    coeffs = F.interpolate(coeffs, (H, W),
+                           mode="bilinear").softmax(dim=1)
+    # coeffs = coeffs.view(N, -1, B, H, W)
+    # rois = rois[:, None, ...].repeat(1, NA, 1, 1, 1)
+    # masks_preds, _ = (rois * coeffs).sum(dim=2) # c.max(dim=1)
+    masks_preds = (rois * coeffs).sum(dim=1)
+    return masks_preds
 
 def non_max_suppression_mask_conf(prediction, 
                                   attn, 
