@@ -118,10 +118,13 @@ python instance-segmentation.py --source 1
   <tr>
     <td>Football Match Image Segmentation</td>
      <td>Cricket Match Image Segmentation</td>
+    <td>FPS and Time Comparision Graph</td>
      </tr>
   <tr>
-    <td><img src="https://user-images.githubusercontent.com/62513924/185704342-59cb9bce-6be1-432b-90fc-2064feed4a67.png" width=640 height=360></td>
-    <td><img src="https://user-images.githubusercontent.com/62513924/185706834-19ee1c9f-de91-439d-bba3-6b05c00be226.png" width=640 height=360></td>
+    <td><img src="https://user-images.githubusercontent.com/62513924/185704342-59cb9bce-6be1-432b-90fc-2064feed4a67.png" width=640 height=240></td>
+    <td><img src="https://user-images.githubusercontent.com/62513924/185706834-19ee1c9f-de91-439d-bba3-6b05c00be226.png" width=640 height=240></td>
+    <td><img src="https://user-images.githubusercontent.com/62513924/185712079-e8ffcdfb-8d3b-467a-9620-d6186976370c.png" width=640 height=240></td>
+  </tr>
   </tr>
  </table>
  
