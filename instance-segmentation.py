@@ -14,11 +14,11 @@ from detectron2.layers import paste_masks_in_image
 from detectron2.utils.memory import retry_if_cuda_oom
 from utils.general import non_max_suppression_mask_conf,strip_optimizer
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 @torch.no_grad()
 def run(
         segweights='yolov7-mask.pt',
-        source='football1.mp4',
-        device='cpu'):
+        source='football1.mp4'):
     
     #list to store time
     time_list = []
@@ -55,7 +55,7 @@ def run(
     resize_height, resize_width = vid_write_image.shape[:2]
     out_video_name = f"{video_path.split('/')[-1].split('.')[0]}"
     out = cv2.VideoWriter(f"{out_video_name}_segmentation.mp4",
-                        cv2.VideoWriter_fourcc(*'mjpg'), 30,
+                        cv2.VideoWriter_fourcc(*'mp4v'), 30,
                         (resize_width, resize_height))
 
     #count no of frames
@@ -63,7 +63,6 @@ def run(
     
     #count total fps
     total_fps = 0 
-
 
     #loop until cap opened or video not complete
     while(cap.isOpened):
@@ -80,7 +79,7 @@ def run(
             orig_image = frame
             #convert frame to RGB
             image = cv2.cvtColor(orig_image, cv2.COLOR_BGR2RGB)
-            image = letterbox(image, 640, stride=64, auto=True)[0]
+            image = letterbox(image, (frame_width), stride=64, auto=True)[0]
             image_ = image.copy()
             image = transforms.ToTensor()(image)
             image = torch.tensor(np.array([image.numpy()]))
@@ -123,20 +122,21 @@ def run(
             #Draw segmented masks
             pred, pred_masks = output[0], output_mask[0]
             base = bases[0]
-            print(base)
-            bboxes = Boxes(pred[:, :4])
-            original_pred_masks = pred_masks.view(-1, hyp['mask_resolution'], hyp['mask_resolution'])
-            pred_masks = retry_if_cuda_oom(paste_masks_in_image)( original_pred_masks, bboxes, (height, width), threshold=0.5)
-            pred_masks_np = pred_masks.detach().cpu().numpy()
-            pred_cls = pred[:, 5].detach().cpu().numpy()
-            pred_conf = pred[:, 4].detach().cpu().numpy()
-            nimg = image[0].permute(1, 2, 0) * 255
-            nimg = nimg.cpu().numpy().astype(np.uint8)
+            # print(base)
+            if pred is not None:
+                bboxes = Boxes(pred[:, :4])
+                original_pred_masks = pred_masks.view(-1, hyp['mask_resolution'], hyp['mask_resolution'])
+                pred_masks = retry_if_cuda_oom(paste_masks_in_image)( original_pred_masks, bboxes, (height, width), threshold=0.5)
+                pred_masks_np = pred_masks.detach().cpu().numpy()
+                pred_cls = pred[:, 5].detach().cpu().numpy()
+                pred_conf = pred[:, 4].detach().cpu().numpy()
+                nimg = image[0].permute(1, 2, 0) * 255
+                nimg = nimg.cpu().numpy().astype(np.uint8)
 
-            #convert image to original format
-            nimg = cv2.cvtColor(nimg, cv2.COLOR_RGB2BGR)
-            nbboxes = bboxes.tensor.detach().cpu().numpy().astype(np.int)
-            pnimg = nimg.copy()
+                #convert image to original format
+                nimg = cv2.cvtColor(nimg, cv2.COLOR_RGB2BGR)
+                nbboxes = bboxes.tensor.detach().cpu().numpy().astype(np.int)
+                pnimg = nimg.copy()
 
             #different color for each instance
             for one_mask, bbox, cls, conf in zip(pred_masks_np, nbboxes, pred_cls, pred_conf):
@@ -161,7 +161,11 @@ def run(
             time_list.append(end_time - start_time)
             
             #add FPS on top of video
-            cv2.putText(pnimg, f'FPS: {int(fps)}', (11, 100), 0, 1, [255, 0, 0], thickness=2, lineType=cv2.LINE_AA)
+            cv2.putText(pnimg, f'FPS: {int(fps)}', (11, 100), 0, 1, [255, 0, 0], thickness=4, 
+                        lineType=cv2.LINE_AA)
+
+            # cv2.imshow('image', im0)
+            out.write(pnimg)
         else:
             break
     
@@ -178,7 +182,6 @@ def parse_opt():
     parser = argparse.ArgumentParser()
     parser.add_argument('--segweights', nargs='+', type=str, default='yolov7-mask.pt', help='yolov7 segmentation model path(s)')
     parser.add_argument('--source', type=str, default='football1.mp4', help='video/0 for webcam')
-    parser.add_argument('--device', type=str, default='cpu', help='cpu/0,1,2,3(gpu)')   #device arugments
     opt = parser.parse_args()
     return opt
 
@@ -198,5 +201,5 @@ def main(opt):
 
 if __name__ == "__main__":
     opt = parse_opt()
-    strip_optimizer(opt.device,opt.segweights)
+    strip_optimizer(device,opt.segweights)
     main(opt)
