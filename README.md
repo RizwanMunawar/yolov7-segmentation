@@ -1,11 +1,14 @@
 # yolov7-instance-segmentation
 
-# Features
+## Features
 - How to run Code on Windows
 - How to run Code on Linux
 - Frequently Asked Questions (FAQs)
 
-# Requirements
+## Coming Soon
+- Development of streamlit dashboard for Instance-Segmentation with Object Tracking
+
+## Requirements
 - GPU (Needed for installation of detectron2)
 - Git for Windows <a href="https://git-scm.com/download/win">Download Link</a>  
 - Git on Linux (Install git on linux by using command in terminal. ```sudo apt-get install git```)
