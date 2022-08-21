@@ -3,7 +3,6 @@
 ## Features
 - How to run Code on Windows
 - How to run Code on Linux
-- Frequently Asked Questions (FAQs)
 
 ## Coming Soon
 - Development of streamlit dashboard for Instance-Segmentation with Object Tracking
