@@ -3,7 +3,7 @@
 ## Features
 - How to run Code on Windows
 - How to run Code on Linux
-- Training Procedure
+- How to train on Custom Data
 
 ## Coming Soon
 - Development of streamlit dashboard for Instance-Segmentation with Object Tracking
