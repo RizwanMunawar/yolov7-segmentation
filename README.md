@@ -37,7 +37,7 @@ cd yolov7-instance-segmentation
 ```
 - Create envirnoment
 ```
-conda env create -f environment.yml
+conda env create -f envirnoment.yml
 ```
 - Activate the envirnoment
 ```
