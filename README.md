@@ -3,6 +3,7 @@
 ## Features
 - How to run Code on Windows
 - How to run Code on Linux
+- Training Procedure
 
 ## Coming Soon
 - Development of streamlit dashboard for Instance-Segmentation with Object Tracking
@@ -127,6 +128,49 @@ python instance-segmentation.py --source 1
   </tr>
  </table>
  
+
+## Training
+- Make sure to follow above mentioned steps before you will start training on custom dataset.
+- Make a folder name inside <b>yolov7-instance-segmentation</b> with name <b>dataset</b>.
+- Move your (segmentation custom labelled data) inside that folder with mentioned structure.
+
+└── dataset
+
+    └── train
+
+        └── images (folder including all training images)
+    
+        └── labels (folder including all training labels)
+  
+    └── test
+   
+        └── images (folder including all testing images)
+    
+        └── labels (folder including all testing labels)
+
+- Go to the <b>data</b> folder and create a file with name <b>custom.yaml</b> and paste the mentioned code below inside that.
+
+```
+train: "path to train folder"
+val: "path to validation folder"
+
+# number of classes
+nc: 2
+
+# class names
+names: [ 'person','Bike']
+```
+
+- Go to the terminal, and run mentioned command below. (Make sure to activate first conda envirnoment "detectron2")
+```
+python train.py --weights yolov7-mask.pt --cfg cfg/yolov7-mask.yaml --batch-size 4 --img 256 --hyp data/hyp.scratch.mask.yaml --data data/custom.yaml 
+```
+
+## Testing
+```
+python test.py --data data/custom.yaml --img 256 --conf 0.25 --iou 0.65 --weights yolov7-mask.pt
+```
+
 ## References
 - https://github.com/WongKinYiu/yolov7
 - https://github.com/ultralytics/yolov5
