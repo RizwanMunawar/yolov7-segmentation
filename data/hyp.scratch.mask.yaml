@@ -34,4 +34,4 @@ paste_in: 0.  # image copy paste (probability)
 attn_resolution: 14
 num_base: 5
 mask_resolution: 56
-
+loss_ota: 1 # use ComputeLossOTA, use 0 for faster training
