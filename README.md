@@ -48,7 +48,7 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
 <table>
   <tr>
     <td>Car Semantic Segmentation</td>
-     <td>Cricket Match Image Segmentation</td>
+     <td>Car Semantic Segmentation</td>
      </tr>
   <tr>
     <td><img src="https://user-images.githubusercontent.com/62513924/190402435-931f0ee3-9af1-4399-8222-1028d5afbd1a.png" width=640 height=180></td>
@@ -134,8 +134,17 @@ python3 segment/predict.py --weights "runs/yolov7-seg/exp/weights/best.pt" --sou
 ```
 
 ## RESULTS
-
-https://user-images.githubusercontent.com/62513924/190402986-ec91319d-8a40-45b8-bcc9-b7ca469a589a.mp4
+<table>
+  <tr>
+    <td>Car Semantic Segmentation</td>
+     <td>Car Semantic Segmentation</td>
+     </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/62513924/190402435-931f0ee3-9af1-4399-8222-1028d5afbd1a.png" width=640 height=180></td>
+    <td><img src="https://user-images.githubusercontent.com/62513924/190402752-521b7815-bea8-4cef-8b36-54fb7a962244.png" width=640 height=180></td>
+  </tr>
+  </tr>
+ </table>
 
 
 
