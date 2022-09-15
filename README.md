@@ -52,13 +52,12 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
      </tr>
   <tr>
     <td><img src="https://user-images.githubusercontent.com/62513924/190402435-931f0ee3-9af1-4399-8222-1028d5afbd1a.png" width=640 height=180></td>
-    <td><img src="https://user-images.githubusercontent.com/62513924/185706834-19ee1c9f-de91-439d-bba3-6b05c00be226.png" width=640 height=180></td>
+    <td><img src="https://user-images.githubusercontent.com/62513924/190402752-521b7815-bea8-4cef-8b36-54fb7a962244.png" width=640 height=180></td>
   </tr>
   </tr>
  </table>
- ![1]()
 
- 
+
 
 ## Custom Data Labelling
 
