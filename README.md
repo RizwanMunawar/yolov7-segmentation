@@ -9,12 +9,10 @@
 ```
 git clone https://github.com/RizwanMunawar/yolov7-segmentation.git
 ```
-
 - Goto the cloned folder.
 ```
 cd yolov7-segmentation
 ```
-
 - Create a virtual envirnoment (Recommended, If you dont want to disturb python packages)
 ```
 ### For Linux Users
@@ -29,26 +27,20 @@ activate
 cd ..
 cd ..
 ```
-
 - Upgrade pip with mentioned command below.
 ```
 pip install --upgrade pip
 ```
-
 - Install requirements with mentioned command below.
 ```
 pip install -r requirements.txt
 ```
-- Download weights and store in "yolov7-segmentation" directory.
-```
-wget https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-seg.pt
-```
-
+- Download weights from [link](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-seg.pt) and store in "yolov7-segmentation" directory.
+- 
 - Run the code with mentioned command below.
 ```
 python3 segment/predict.py --weights yolov7-seg.pt --source "video path.mp4"
 ```
-
 
 - Output file will be created in the working directory with name ("yolov7-segmentation/runs/predict-seg/exp/"original-video-name.mp4")
 
@@ -70,10 +62,9 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "video path.mp4"
 
 ## Custom Training
 - Make sure to follow above mentioned steps before you will start training on custom dataset.
-- Make a folder name inside <b>yolov7-segmentation</b> with name <b>dataset</b>.
-- Move your (segmentation custom labelled data) inside that folder with mentioned structure.
+- Move your (segmentation custom labelled data) inside "yolov7-segmentation\data" folder with mentioned structure.
 
-└── dataset
+└── data
 
     └── train
 
@@ -110,11 +101,11 @@ python3 segment/train.py --data "custom.yaml" \
 
 ## Testing
 ```
-python test.py --data data/custom.yaml --img 256 --conf 0.25 --iou 0.65 --weights yolov7-mask.pt
+python test.py --data data/custom.yaml --img 256 --conf 0.25 --iou 0.65 --weights yolov7-seg.pt
 ```
 
 ## References
-- https://github.com/WongKinYiu/yolov7
+- https://github.com/WongKinYiu/yolov7/tree/u7/seg
 - https://github.com/ultralytics/yolov5
 
 ## My Medium Articles
