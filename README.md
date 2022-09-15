@@ -1,10 +1,5 @@
 # yolov7-instance-segmentation
 
-## Features
-- How to run Code on Windows
-- How to run Code on Linux
-- How to train on Custom Data
-
 ## Coming Soon
 - Development of streamlit dashboard for Instance-Segmentation with Object Tracking
 
@@ -44,65 +39,18 @@ pip install --upgrade pip
 ```
 pip install -r requirements.txt
 ```
+- Download weights and store in "yolov7-segmentation" directory.
+```
+wget https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-seg.pt
+```
 
 - Run the code with mentioned command below.
 ```
 python3 segment/predict.py --weights yolov7-seg.pt --source "video path.mp4"
 ```
 
-- Download weights
-```
-wget https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-mask.pt
-```
-- Run Code with mentioned command.
-```
 
-- Output file will be created in the working directory with name ("your-file-name-without-extension"+"_segmentation.mp4")
-
-### Window Users
-- Download the <a href="https://repo.anaconda.com/archive/Anaconda3-2022.05-Windows-x86_64.exe">64-Bit</a> or <a href="https://repo.anaconda.com/archive/Anaconda3-2022.05-Windows-x86.exe">32-Bit</a> Anaconda <B>(Based on your system specifications)</B>.
-- Install the executable
-- Goto Start Menu and search for "Anaconda Prompt". Double Click to Open it.
-- Change the path of anaconda prompt with mentioned command below.
-```
-cd "C:\Users\"yourusername"\Desktop
-```
-- Clone the repository.
-```
-git clone https://github.com/RizwanMunawar/yolov7-instance-segmentation
-```
-- Goto the cloned folder.
-```
-cd yolov7-instance-segmentation
-```
-- Create envirnoment
-```
-conda env create -f environment.yml
-```
-- Activate the envirnoment
-```
-conda activate detectron2
-```
-- Install extra modules
-```
-pip install -r requirements.txt
-```
-- Download weights from <a href="https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-mask.pt">link</a> and move them to the cloned folder.
-- Run Code with mentioned command.
-```
-#Basic Usage
-python instance-segmentation.py
-
-#For LiveStream (Ip Stream URL Format i.e "rtsp://username:pass@ipaddress:portno/video/video.amp")
-python instance-segmentation.py --source "your IP Camera Stream URL"
-
-#For WebCam
-python instance-segmentation.py --source 0
-
-#For External Camera
-python instance-segmentation.py --source 1
-```
-- Output file will be created in the working directory with name ("your-file-name-without-extension"+"_segmentation.mp4")
+- Output file will be created in the working directory with name ("yolov7-segmentation/runs/predict-seg/exp/"original-video-name.mp4")
 
 ### RESULTS
 <table>
@@ -120,9 +68,9 @@ python instance-segmentation.py --source 1
  </table>
  
 
-## Training
+## Custom Training
 - Make sure to follow above mentioned steps before you will start training on custom dataset.
-- Make a folder name inside <b>yolov7-instance-segmentation</b> with name <b>dataset</b>.
+- Make a folder name inside <b>yolov7-segmentation</b> with name <b>dataset</b>.
 - Move your (segmentation custom labelled data) inside that folder with mentioned structure.
 
 └── dataset
@@ -152,9 +100,12 @@ nc: 2
 names: [ 'person','Bike']
 ```
 
-- Go to the terminal, and run mentioned command below. (Make sure to activate first conda envirnoment "detectron2")
+- Go to the terminal, and run mentioned command below to start training.
 ```
-python train.py --weights yolov7-mask.pt --cfg cfg/yolov7-mask.yaml --batch-size 4 --img 256 --hyp data/hyp.scratch.mask.yaml --data data/custom.yaml 
+python3 segment/train.py --data "custom.yaml" \
+--batch 4 --weights '' --cfg yolov7-seg.yaml \
+--epochs 10 --name yolov7-seg \
+--img 640 --hyp hyp.scratch-high.yaml
 ```
 
 ## Testing
