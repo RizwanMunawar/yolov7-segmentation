@@ -116,10 +116,8 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
 ```
 train: "path to train folder"
 val: "path to validation folder"
-
 # number of classes
 nc: 2
-
 # class names
 names: [ 'person','Bike']
 ```
