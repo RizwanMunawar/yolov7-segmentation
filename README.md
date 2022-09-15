@@ -47,15 +47,17 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
 ### RESULTS
 <table>
   <tr>
-    <td>Football Match Image Segmentation</td>
+    <td>Car Semantic Segmentation</td>
      <td>Cricket Match Image Segmentation</td>
      </tr>
   <tr>
-    <td><img src="https://user-images.githubusercontent.com/62513924/185704342-59cb9bce-6be1-432b-90fc-2064feed4a67.png" width=640 height=180></td>
+    <td><img src="https://user-images.githubusercontent.com/62513924/190402435-931f0ee3-9af1-4399-8222-1028d5afbd1a.png" width=640 height=180></td>
     <td><img src="https://user-images.githubusercontent.com/62513924/185706834-19ee1c9f-de91-439d-bba3-6b05c00be226.png" width=640 height=180></td>
   </tr>
   </tr>
  </table>
+ ![1]()
+
  
 
 ## Custom Data Labelling
