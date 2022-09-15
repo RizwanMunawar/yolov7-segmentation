@@ -19,7 +19,9 @@
 - Open the terminal and run mentioned command below to download & install anaconda for linux operating system
 ```
 wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
-bash Anaconda3-2022.05-Linux-x86_64.sh #(you will need to accept license terms from terminal, then you installation will continue)
+
+#(you will need to accept license terms from terminal, then you installation will continue)
+bash Anaconda3-2022.05-Linux-x86_64.sh
 ```
 - Once Anaconda Installed, restart your machine.
 
