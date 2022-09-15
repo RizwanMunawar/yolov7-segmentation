@@ -9,19 +9,14 @@
 - Development of streamlit dashboard for Instance-Segmentation with Object Tracking
 
 ## Requirements
-- GPU (Needed for installation of detectron2)
 - Git for Windows <a href="https://git-scm.com/download/win">Download Link</a>  
 - Git on Linux (Install git on linux by using command in terminal. ```sudo apt-get install git```)
 
 ## Steps to run Code
 
-### Linux Users
+- Clone the repository
 - Open the terminal and run mentioned command below to download & install anaconda for linux operating system
 ```
-wget https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh
-
-#(you will need to accept license terms from terminal, then you installation will continue)
-bash Anaconda3-2022.05-Linux-x86_64.sh
 ```
 - Once Anaconda Installed, restart your machine.
 
@@ -33,20 +28,6 @@ sudo chmod 777 .conda
 - Clone the repository.
 ```
 git clone https://github.com/RizwanMunawar/yolov7-instance-segmentation
-```
-- Goto the cloned folder.
-```
-cd yolov7-instance-segmentation
-```
-- Create envirnoment
-```
-conda env create -f envirnoment.yml
-```
-- Activate the envirnoment
-```
-conda activate detectron2
-```
-- Install extra modules
 ```
 pip install -r requirements.txt
 ```
