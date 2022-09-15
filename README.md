@@ -59,7 +59,7 @@ wget https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-mask.pt
 #Basic Usage
 python instance-segmentation.py
 
-#For LiveStream (Ip Stream URL Format i.e "rtsp://username:pass@ipaddress:portno/video/video.amp")
+#For LiveStream(Ip Stream URL Format i.e "rtsp://username:pass@ipaddress:portno/video/video.amp")
 python instance-segmentation.py --source "your IP Camera Stream URL"
 
 #For WebCam
