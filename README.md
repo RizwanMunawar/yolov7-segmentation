@@ -8,47 +8,55 @@
 ## Coming Soon
 - Development of streamlit dashboard for Instance-Segmentation with Object Tracking
 
-## Requirements
-- Git for Windows <a href="https://git-scm.com/download/win">Download Link</a>  
-- Git on Linux (Install git on linux by using command in terminal. ```sudo apt-get install git```)
-
 ## Steps to run Code
 
 - Clone the repository
-- Open the terminal and run mentioned command below to download & install anaconda for linux operating system
 ```
+git clone https://github.com/RizwanMunawar/yolov7-segmentation.git
 ```
-- Once Anaconda Installed, restart your machine.
 
-- Open the terminal in <B>home folder</B>, and run the mentioned command below.
+- Goto the cloned folder.
 ```
-cd ~
-sudo chmod 777 .conda
+cd yolov7-segmentation
 ```
-- Clone the repository.
+
+- Create a virtual envirnoment (Recommended, If you dont want to disturb python packages)
 ```
-git clone https://github.com/RizwanMunawar/yolov7-instance-segmentation
+### For Linux Users
+python3 -m venv yolov7seg
+source yolov7seg/bin/activate
+
+### For Window Users
+python3 -m venv yolov7seg
+cd yolov7seg
+cd Scripts
+activate
+cd ..
+cd ..
+```
+
+- Upgrade pip with mentioned command below.
+```
+pip install --upgrade pip
+```
+
+- Install requirements with mentioned command below.
 ```
 pip install -r requirements.txt
 ```
+
+- Run the code with mentioned command below.
+```
+python3 segment/predict.py --weights yolov7-seg.pt --source "video path.mp4"
+```
+
 - Download weights
 ```
 wget https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-mask.pt
 ```
 - Run Code with mentioned command.
 ```
-#Basic Usage
-python instance-segmentation.py
 
-#For LiveStream (Ip Stream URL Format i.e "rtsp://username:pass@ipaddress:portno/video/video.amp")
-python instance-segmentation.py --source "your IP Camera Stream URL"
-
-#For WebCam
-python instance-segmentation.py --source 0
-
-#For External Camera
-python instance-segmentation.py --source 1
-```
 - Output file will be created in the working directory with name ("your-file-name-without-extension"+"_segmentation.mp4")
 
 ### Window Users
