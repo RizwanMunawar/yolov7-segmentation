@@ -126,10 +126,7 @@ names: [ 'person','Bike']
 
 - Go to the terminal, and run mentioned command below to start training.
 ```
-python3 segment/train.py --data "custom.yaml" \
---batch 4 --weights '' --cfg yolov7-seg.yaml \
---epochs 10 --name yolov7-seg \
---img 640 --hyp hyp.scratch-high.yaml
+python3 segment/train.py --data data/custom.yaml --batch 4 --weights '' --cfg yolov7-seg.yaml --epochs 10 --name yolov7-seg --img 640 --hyp hyp.scratch-high.yaml
 ```
 
 ## Testing
