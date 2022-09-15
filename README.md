@@ -64,19 +64,11 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "video path.mp4"
 - Make sure to follow above mentioned steps before you will start training on custom dataset.
 - Move your (segmentation custom labelled data) inside "yolov7-segmentation\data" folder with mentioned structure.
 
-└── data
 
-    └── train
 
-        └── images (folder including all training images)
-    
-        └── labels (folder including all training labels)
-  
-    └── test
-   
-        └── images (folder including all testing images)
-    
-        └── labels (folder including all testing labels)
+![ss](https://user-images.githubusercontent.com/62513924/190388927-62a3ee84-bad8-4f59-806f-1185acdc8acb.png)
+
+
 
 - Go to the <b>data</b> folder and create a file with name <b>custom.yaml</b> and paste the mentioned code below inside that.
 
