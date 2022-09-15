@@ -127,9 +127,9 @@ names: [ 'person','Bike']
 python3 segment/train.py --data data/custom.yaml --batch 4 --weights '' --cfg yolov7-seg.yaml --epochs 10 --name yolov7-seg --img 640 --hyp hyp.scratch-high.yaml
 ```
 
-## Testing
+## Custom Model Detection Command
 ```
-python test.py --data data/custom.yaml --img 256 --conf 0.25 --iou 0.65 --weights yolov7-seg.pt
+python3 segment/predict.py --weights "runs/yolov7-seg/exp/weights/best.pt" --source "videopath.mp4"
 ```
 
 ## References
