@@ -133,6 +133,12 @@ python3 segment/train.py --data data/custom.yaml --batch 4 --weights '' --cfg yo
 python3 segment/predict.py --weights "runs/yolov7-seg/exp/weights/best.pt" --source "videopath.mp4"
 ```
 
+## RESULTS
+
+https://user-images.githubusercontent.com/62513924/190402986-ec91319d-8a40-45b8-bcc9-b7ca469a589a.mp4
+
+
+
 ## References
 - https://github.com/WongKinYiu/yolov7/tree/u7/seg
 - https://github.com/ultralytics/yolov5
