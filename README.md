@@ -39,7 +39,7 @@ pip install -r requirements.txt
 - 
 - Run the code with mentioned command below.
 ```
-python3 segment/predict.py --weights yolov7-seg.pt --source "video path.mp4"
+python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
 ```
 
 - Output file will be created in the working directory with name <b>yolov7-segmentation/runs/predict-seg/exp/"original-video-name.mp4"</b>
