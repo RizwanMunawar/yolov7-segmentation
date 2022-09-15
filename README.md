@@ -36,7 +36,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 - Download weights from [link](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-seg.pt) and store in "yolov7-segmentation" directory.
-- 
+
 - Run the code with mentioned command below.
 ```
 python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
