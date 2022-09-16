@@ -78,11 +78,11 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
  
 ![3](https://user-images.githubusercontent.com/62513924/190391463-a5101f82-eaec-443f-b9aa-33c9dae64f3a.png)
 
+- Note: Make sure to select <b>Instance Segmentation</b> Option in above image.
 
 -You can upload your dataset now.
 
 ![5](https://user-images.githubusercontent.com/62513924/190392273-66564f3c-99c2-4353-b4a6-d92b988cfd30.png)
-
 
 - Once files will upload, you can click on <b>Finish Uploading</b>.
 
