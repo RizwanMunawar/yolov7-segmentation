@@ -75,10 +75,10 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
 
 
 - Click on upload dataset and roboflow will ask for workspace name as shown below. Fill that form and then click on <b>Create Private Project</b>
+- Note: Make sure to select <b>Instance Segmentation</b> Option in below image.
  
 ![3](https://user-images.githubusercontent.com/62513924/190391463-a5101f82-eaec-443f-b9aa-33c9dae64f3a.png)
 
-- Note: Make sure to select <b>Instance Segmentation</b> Option in above image.
 
 -You can upload your dataset now.
 
