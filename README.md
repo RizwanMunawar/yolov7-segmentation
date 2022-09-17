@@ -2,7 +2,11 @@
 
 ## Coming Soon
 - Development of streamlit dashboard for Instance-Segmentation with Object Tracking
-- Article on [medium](https://chr043416.medium.com/) for <b>YOLOv7-segmentation on custom data</b> will publish soon.
+
+## Article for this YOLOv7 Segmentation on Custom Data
+
+- https://chr043416.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29
+
 ## Steps to run Code
 
 - Clone the repository
@@ -157,4 +161,5 @@ python3 segment/predict.py --weights "runs/yolov7-seg/exp/weights/best.pt" --sou
 - https://medium.com/augmented-startups/problems-in-the-development-of-computer-vision-products-eb081ec7aa2e
 - https://medium.com/augmented-startups/yolor-or-yolov5-which-one-is-better-2f844d35e1a1
 - https://medium.com/augmented-startups/train-yolor-on-custom-data-f129391bd3d6
+- https://chr043416.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29
 - https://medium.com/augmented-startups/develop-an-analytics-dashboard-using-streamlit-e6282fa5e0f
