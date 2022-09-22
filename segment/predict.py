@@ -1,29 +1,3 @@
-# YOLOv5 🚀 by Ultralytics, GPL-3.0 license
-"""
-Run YOLOv5 segmentation inference on images, videos, directories, streams, etc.
-
-Usage - sources:
-    $ python segment/predict.py --weights yolov5s-seg.pt --source 0                               # webcam
-                                                                  img.jpg                         # image
-                                                                  vid.mp4                         # video
-                                                                  path/                           # directory
-                                                                  'path/*.jpg'                    # glob
-                                                                  'https://youtu.be/Zgi9g1ksQHc'  # YouTube
-                                                                  'rtsp://example.com/media.mp4'  # RTSP, RTMP, HTTP stream
-
-Usage - formats:
-    $ python segment/predict.py --weights yolov5s-seg.pt                 # PyTorch
-                                          yolov5s-seg.torchscript        # TorchScript
-                                          yolov5s-seg.onnx               # ONNX Runtime or OpenCV DNN with --dnn
-                                          yolov5s-seg.xml                # OpenVINO
-                                          yolov5s-seg.engine             # TensorRT
-                                          yolov5s-seg.mlmodel            # CoreML (macOS-only)
-                                          yolov5s-seg_saved_model        # TensorFlow SavedModel
-                                          yolov5s-seg.pb                 # TensorFlow GraphDef
-                                          yolov5s-seg.tflite             # TensorFlow Lite
-                                          yolov5s-seg_edgetpu.tflite     # TensorFlow Edge TPU
-"""
-
 import argparse
 import os
 import platform
@@ -32,6 +6,13 @@ from pathlib import Path
 
 import torch
 import torch.backends.cudnn as cudnn
+
+#..... Tracker modules......
+import skimage
+from sort_count import *
+import numpy as np
+#...........................
+
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[1]  # YOLOv5 root directory
@@ -47,6 +28,46 @@ from utils.plots import Annotator, colors, save_one_box
 from utils.segment.general import process_mask, scale_masks
 from utils.segment.plots import plot_masks
 from utils.torch_utils import select_device, smart_inference_mode
+
+
+#............................... Tracker Functions ............................
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        
+def onSegment(p, q, r):
+    if ((q.x <= max(p.x, r.x)) and (q.x >= min(p.x, r.x)) and
+            (q.y <= max(p.y, r.y)) and (q.y >= min(p.y, r.y))):
+        return True
+    return False
+
+def orientation(p, q, r):
+    val = (float(q.y - p.y) * (r.x - q.x)) - (float(q.x - p.x) * (r.y - q.y))
+    if (val > 0):
+        return 1
+    elif (val < 0):
+        return 2
+    else:
+        return 0
+
+def Intersection(p1, q1, p2, q2):
+    o1 = orientation(p1, q1, p2)
+    o2 = orientation(p1, q1, q2)
+    o3 = orientation(p2, q2, p1)
+    o4 = orientation(p2, q2, q1)
+    if ((o1 != o2) and (o3 != o4)):
+        return True
+    if ((o1 == 0) and onSegment(p1, p2, q1)):
+        return True
+    if ((o2 == 0) and onSegment(p1, q2, q1)):
+        return True
+    if ((o3 == 0) and onSegment(p2, p1, q2)):
+        return True
+    if ((o4 == 0) and onSegment(p2, q1, q2)):
+        return True
+    return False
+#..............................................................................
 
 
 @smart_inference_mode()
@@ -77,7 +98,21 @@ def run(
         hide_conf=False,  # hide confidences
         half=False,  # use FP16 half-precision inference
         dnn=False,  # use OpenCV DNN for ONNX inference
-):
+        trk = False,
+):  
+
+    #.... Initialize SORT .... 
+        
+    sort_max_age = 5 
+    sort_min_hits = 2
+    sort_iou_thresh = 0.2
+    person_up_count =0
+    person_down_count =0
+    sort_tracker = Sort(max_age=sort_max_age,
+                        min_hits=sort_min_hits,
+                        iou_threshold=sort_iou_thresh) 
+    #......................... 
+
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
     is_file = Path(source).suffix[1:] in (IMG_FORMATS + VID_FORMATS)
@@ -111,6 +146,9 @@ def run(
     model.warmup(imgsz=(1 if pt else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
     for path, im, im0s, vid_cap, s in dataset:
+        height_img,width_img,ch_img = im0s.shape
+        line_pt_1 = (0, height_img // 2)
+        line_pt_2 = (width_img, height_img // 2)
         with dt[0]:
             im = torch.from_numpy(im).to(device)
             im = im.half() if model.fp16 else im.float()  # uint8 to fp16/32
@@ -159,11 +197,47 @@ def run(
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
 
                 # Mask plotting ----------------------------------------------------------------------------------------
-                mcolors = [colors(int(cls), True) for cls in det[:, 5]]
+                mcolors = [colors(int(6), True) for cls in det[:, 5]]
                 im_masks = plot_masks(im[i], masks, mcolors)  # image with masks shape(imh,imw,3)
                 annotator.im = scale_masks(im.shape[2:], im_masks, im0.shape)  # scale to original h, w
                 # Mask plotting ----------------------------------------------------------------------------------------
 
+                if trk:
+                    #Tracking ----------------------------------------------------
+                    dets_to_sort = np.empty((0,6))
+                    for x1,y1,x2,y2,conf,detclass in det[:, :6].cpu().detach().numpy():
+                        dets_to_sort = np.vstack((dets_to_sort, 
+                                        np.array([x1, y1, x2, y2, 
+                                                    conf, detclass])))
+
+                    tracked_dets = sort_tracker.update(dets_to_sort)
+                    tracks =sort_tracker.getTrackers()
+
+                    for track in tracks:
+                        index1 = -1
+                        index2 = -2
+                        if len(track.centroids) == 1:
+                            index2 = -1
+                        interseted = Intersection(Point(track.centroids[index1][0], 
+                                                            track.centroids[index1][1]),
+                                                        Point(track.centroids[index2][0], 
+                                                                track.centroids[index2][1]),
+                                                        Point(line_pt_1[0],line_pt_1[1]), 
+                                                        Point(line_pt_2[0], line_pt_2[1]))
+                        if (interseted == True):
+                            if track.centroids[index2][1] > track.centroids[index1][1]:
+                                person_up_count+=1
+                            
+                            else:
+                                person_down_count+=1
+                        annotator.draw_trk(line_thickness,track)
+
+                    if len(tracked_dets)>0:
+                        bbox_xyxy = tracked_dets[:,:4]
+                        identities = tracked_dets[:, 8]
+                        categories = tracked_dets[:, 4]
+                        annotator.draw_id(bbox_xyxy, identities, categories, names)
+            
                 # Write results
                 for *xyxy, conf, cls in reversed(det[:, :6]):
                     if save_txt:  # Write to file
@@ -249,6 +323,7 @@ def parse_opt():
     parser.add_argument('--hide-conf', default=False, action='store_true', help='hide confidences')
     parser.add_argument('--half', action='store_true', help='use FP16 half-precision inference')
     parser.add_argument('--dnn', action='store_true', help='use OpenCV DNN for ONNX inference')
+    parser.add_argument('--trk', action='store_true', help='Apply Sort Tracking')
     opt = parser.parse_args()
     opt.imgsz *= 2 if len(opt.imgsz) == 1 else 1  # expand
     print_args(vars(opt))
