@@ -42,7 +42,11 @@ pip install -r requirements.txt
 
 - Run the code with mentioned command below.
 ```
+#for segmentation with detection
 python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
+
+#for segmentation with detection + Tracking
+python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --trk
 ```
 
 - Output file will be created in the working directory with name <b>yolov7-segmentation/runs/predict-seg/exp/"original-video-name.mp4"</b>
@@ -52,14 +56,15 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
   <tr>
     <td>Car Semantic Segmentation</td>
      <td>Car Semantic Segmentation</td>
+     <td>Person Segmentation + Tracking</td>
      </tr>
   <tr>
     <td><img src="https://user-images.githubusercontent.com/62513924/190402435-931f0ee3-9af1-4399-8222-1028d5afbd1a.png" width=640 height=180></td>
     <td><img src="https://user-images.githubusercontent.com/62513924/190402752-521b7815-bea8-4cef-8b36-54fb7a962244.png" width=640 height=180></td>
+    <td><img src="https://user-images.githubusercontent.com/62513924/191729411-a8d8b5e2-bdbf-4c0e-bd1b-a52e23f7c9d3.png" width=640 height=180></td>
   </tr>
   </tr>
  </table>
-
 
 
 ## Custom Data Labelling
@@ -140,10 +145,12 @@ python3 segment/predict.py --weights "runs/yolov7-seg/exp/weights/best.pt" --sou
   <tr>
     <td>Car Semantic Segmentation</td>
      <td>Car Semantic Segmentation</td>
+     <td>Person Segmentation + Tracking</td>
      </tr>
   <tr>
     <td><img src="https://user-images.githubusercontent.com/62513924/190402435-931f0ee3-9af1-4399-8222-1028d5afbd1a.png" width=640 height=180></td>
     <td><img src="https://user-images.githubusercontent.com/62513924/190410343-ada838c6-e505-4248-8a76-fbc5996e091e.png" width=640 height=180></td>
+    <td><img src="https://user-images.githubusercontent.com/62513924/191729411-a8d8b5e2-bdbf-4c0e-bd1b-a52e23f7c9d3.png" width=640 height=180></td>
   </tr>
   </tr>
  </table>
