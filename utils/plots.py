@@ -113,6 +113,31 @@ class Annotator:
                             thickness=tf,
                             lineType=cv2.LINE_AA)
 
+
+    def draw_trk(self,thickness,centroids):
+        [cv2.line(self.im, (int(centroids.centroids[i][0]),int(centroids.centroids[i][1])),
+                (int(centroids.centroids[i+1][0]),int(centroids.centroids[i+1][1])),
+                (255,144,30), thickness=thickness) for i,_ in  enumerate(centroids.centroids)
+                if i < len(centroids.centroids)-1 ]
+
+
+    def draw_id(self, bbox, identities=None, categories=None, names=None, offset=(0, 0)):
+        for i, box in enumerate(bbox):
+            x1, y1, x2, y2 = [int(i) for i in box]
+            x1 += offset[0]
+            x2 += offset[0]
+            y1 += offset[1]
+            y2 += offset[1]
+            cat = int(categories[i]) if categories is not None else 0
+            id = int(identities[i]) if identities is not None else 0
+            data = (int((box[0]+box[2])/2),(int((box[1]+box[3])/2)))
+            label = str(id)
+            (w, h), _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.6, 1)
+            cv2.rectangle(self.im, (x1, y1 - 20), (x1 + w, y1), (255,144,30), -1)
+            cv2.putText(self.im, label, (x1, y1 - 5),cv2.FONT_HERSHEY_SIMPLEX, 0.6, [255, 255, 255], 1)
+            cv2.circle(self.im, data, 4, (255,0,255),-1)
+
+
     def rectangle(self, xy, fill=None, outline=None, width=1):
         # Add rectangle to image (PIL-only)
         self.draw.rectangle(xy, fill, outline, width)
