@@ -30,46 +30,6 @@ from utils.segment.plots import plot_masks
 from utils.torch_utils import select_device, smart_inference_mode
 
 
-#............................... Tracker Functions ............................
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        
-def onSegment(p, q, r):
-    if ((q.x <= max(p.x, r.x)) and (q.x >= min(p.x, r.x)) and
-            (q.y <= max(p.y, r.y)) and (q.y >= min(p.y, r.y))):
-        return True
-    return False
-
-def orientation(p, q, r):
-    val = (float(q.y - p.y) * (r.x - q.x)) - (float(q.x - p.x) * (r.y - q.y))
-    if (val > 0):
-        return 1
-    elif (val < 0):
-        return 2
-    else:
-        return 0
-
-def Intersection(p1, q1, p2, q2):
-    o1 = orientation(p1, q1, p2)
-    o2 = orientation(p1, q1, q2)
-    o3 = orientation(p2, q2, p1)
-    o4 = orientation(p2, q2, q1)
-    if ((o1 != o2) and (o3 != o4)):
-        return True
-    if ((o1 == 0) and onSegment(p1, p2, q1)):
-        return True
-    if ((o2 == 0) and onSegment(p1, q2, q1)):
-        return True
-    if ((o3 == 0) and onSegment(p2, p1, q2)):
-        return True
-    if ((o4 == 0) and onSegment(p2, q1, q2)):
-        return True
-    return False
-#..............................................................................
-
-
 @smart_inference_mode()
 def run(
         weights=ROOT / 'yolov5s-seg.pt',  # model.pt path(s)
@@ -214,22 +174,6 @@ def run(
                     tracks =sort_tracker.getTrackers()
 
                     for track in tracks:
-                        index1 = -1
-                        index2 = -2
-                        if len(track.centroids) == 1:
-                            index2 = -1
-                        interseted = Intersection(Point(track.centroids[index1][0], 
-                                                            track.centroids[index1][1]),
-                                                        Point(track.centroids[index2][0], 
-                                                                track.centroids[index2][1]),
-                                                        Point(line_pt_1[0],line_pt_1[1]), 
-                                                        Point(line_pt_2[0], line_pt_2[1]))
-                        if (interseted == True):
-                            if track.centroids[index2][1] > track.centroids[index1][1]:
-                                person_up_count+=1
-                            
-                            else:
-                                person_down_count+=1
                         annotator.draw_trk(line_thickness,track)
 
                     if len(tracked_dets)>0:
