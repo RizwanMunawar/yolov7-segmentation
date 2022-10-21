@@ -130,6 +130,7 @@ nc: 1
 names: [ 'car']
 ```
 
+- Download the <a href= "https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-seg.pt">yolov7-seg.pt</a> and move to <b>yolov7-segmentation</b> folder.
 - Go to the terminal, and run mentioned command below to start training.
 ```
 python3 segment/train.py --data data/custom.yaml --batch 4 --weights '' --cfg yolov7-seg.yaml --epochs 10 --name yolov7-seg --img 640 --hyp hyp.scratch-high.yaml
