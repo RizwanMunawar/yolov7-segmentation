@@ -23,9 +23,9 @@ ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 from models.common import DetectMultiBackend
 from utils.dataloaders import IMG_FORMATS, VID_FORMATS, LoadImages, LoadStreams
 from utils.general import (LOGGER, Profile, check_file, check_img_size, check_imshow, check_requirements, colorstr, cv2,
-                           increment_path, non_max_suppression, print_args, scale_coords, strip_optimizer, xyxy2xywh,scale_segments)
+                           increment_path, non_max_suppression, print_args, scale_coords, strip_optimizer, xyxy2xywh)
 from utils.plots import Annotator, colors, save_one_box
-from utils.segment.general import process_mask, scale_masks,masks2segments
+from utils.segment.general import process_mask, scale_masks
 from utils.segment.plots import plot_masks
 from utils.torch_utils import select_device, smart_inference_mode
 
@@ -148,7 +148,6 @@ def run(
             if len(det):
                 masks = process_mask(proto[i], det[:, 6:], det[:, :4], im.shape[2:], upsample=True)  # HWC
 
-
                 # Rescale boxes from img_size to im0 size
                 det[:, :4] = scale_coords(im.shape[2:], det[:, :4], im0.shape).round()
 
@@ -184,18 +183,10 @@ def run(
                         annotator.draw_id(bbox_xyxy, identities, categories, names)
             
                 # Write results
-                for j, (*xyxy, conf, cls) in enumerate(reversed(det[:, :6])):
-
+                for *xyxy, conf, cls in reversed(det[:, :6]):
                     if save_txt:  # Write to file
-                        segments = reversed(masks2segments(masks))
-                        segments = [scale_segments(im.shape[2:], x, im0.shape).round() for x in segments]
-                        segj = segments[j].reshape(-1)  # (n,2) to (n*2)
-
                         xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
-                        #line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
-                        line = (cls, *segj, conf) if save_conf else (cls, *segj)  # label format
-
-                   
+                        line = (cls, *xywh, conf) if save_conf else (cls, *xywh)  # label format
                         with open(f'{txt_path}.txt', 'a') as f:
                             f.write(('%g ' * len(line)).rstrip() % line + '\n')
 

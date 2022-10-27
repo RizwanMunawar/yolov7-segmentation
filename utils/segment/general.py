@@ -1,7 +1,6 @@
 import cv2
 import torch
 import torch.nn.functional as F
-import numpy as np
 
 
 def crop(masks, boxes):
@@ -127,16 +126,3 @@ def masks_iou(mask1, mask2, eps=1e-7):
     intersection = (mask1 * mask2).sum(1).clamp(0)  # (N, )
     union = (mask1.sum(1) + mask2.sum(1))[None] - intersection  # (area1 + area2) - intersection
     return intersection / (union + eps)
-
-
-def masks2segments(masks, strategy='largest'):
-    # Convert masks(n,160,160) into segments(n,xy)
-    segments = []
-    for x in masks.cpu().int().numpy().astype('uint8'):
-        c = cv2.findContours(x, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
-        if strategy == 'concat':  # concatenate all segments
-            c = np.concatenate([x.reshape(-1, 2) for x in c])
-        elif strategy == 'largest':  # select largest segment
-            c = np.array(c[np.array([len(x) for x in c]).argmax()]).reshape(-1, 2)
-        segments.append(c.astype('float32'))
-    return segments
