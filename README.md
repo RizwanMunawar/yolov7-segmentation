@@ -47,10 +47,17 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
 
 #for segmentation with detection + Tracking
 python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --trk
+
+#for segmentation with coordinates
+python3 segment/predict.py --weights path/to/weights/best.pt --source dir --save-txt
+
 ```
+
 
 - Output file will be created in the working directory with name <b>yolov7-segmentation/runs/predict-seg/exp/"original-video-name.mp4"</b>
 
+
+python3 segment/predict.py --weights runs/train-seg/exp/weights/best.pt --conf 0.1 --source testDataHealthy
 ### RESULTS
 <table>
   <tr>

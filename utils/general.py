@@ -56,6 +56,8 @@ os.environ['NUMEXPR_MAX_THREADS'] = str(NUM_THREADS)  # NumExpr max threads
 os.environ['OMP_NUM_THREADS'] = '1' if platform.system() == 'darwin' else str(NUM_THREADS)  # OpenMP (PyTorch and SciPy)
 
 
+
+
 def is_ascii(s=''):
     # Is string composed of all ASCII (no UTF) characters? (note str().isascii() introduced in python 3.7)
     s = str(s)  # convert list, tuple, None, etc. to str
@@ -1164,6 +1166,30 @@ def imshow(path, im):
 
 
 cv2.imread, cv2.imwrite, cv2.imshow = imread, imwrite, imshow  # redefine
+
+def clip_segments(boxes, shape):
+    # Clip segments (xy1,xy2,...) to image shape (height, width)
+    if isinstance(boxes, torch.Tensor):  # faster individually
+        boxes[:, 0].clamp_(0, shape[1])  # x
+        boxes[:, 1].clamp_(0, shape[0])  # y
+    else:  # np.array (faster grouped)
+        boxes[:, 0] = boxes[:, 0].clip(0, shape[1])  # x
+        boxes[:, 1] = boxes[:, 1].clip(0, shape[0])  # y
+        
+def scale_segments(img1_shape, segments, img0_shape, ratio_pad=None):
+    # Rescale coords (xyxy) from img1_shape to img0_shape
+    if ratio_pad is None:  # calculate from img0_shape
+        gain = min(img1_shape[0] / img0_shape[0], img1_shape[1] / img0_shape[1])  # gain  = old / new
+        pad = (img1_shape[1] - img0_shape[1] * gain) / 2, (img1_shape[0] - img0_shape[0] * gain) / 2  # wh padding
+    else:
+        gain = ratio_pad[0][0]
+        pad = ratio_pad[1]
+
+    segments[:, 0] -= pad[0]  # x padding
+    segments[:, 1] -= pad[1]  # y padding
+    segments /= gain
+    clip_segments(segments, img0_shape)
+    return segments
 
 # Variables ------------------------------------------------------------------------------------------------------------
 NCOLS = 0 if is_docker() else shutil.get_terminal_size().columns  # terminal window size for tqdm
