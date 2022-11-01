@@ -48,7 +48,7 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
 #for segmentation with detection + Tracking
 python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --trk
 
-#for save the labels of segmentation
+#save the labels files of segmentation
 python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --save-txt
 ```
 
