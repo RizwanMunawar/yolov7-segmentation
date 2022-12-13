@@ -106,9 +106,6 @@ def run(
     model.warmup(imgsz=(1 if pt else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
     for path, im, im0s, vid_cap, s in dataset:
-        height_img,width_img,ch_img = im0s.shape
-        line_pt_1 = (0, height_img // 2)
-        line_pt_2 = (width_img, height_img // 2)
         with dt[0]:
             im = torch.from_numpy(im).to(device)
             im = im.half() if model.fp16 else im.float()  # uint8 to fp16/32
