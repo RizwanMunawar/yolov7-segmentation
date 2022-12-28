@@ -66,8 +66,6 @@ def run(
     sort_max_age = 5 
     sort_min_hits = 2
     sort_iou_thresh = 0.2
-    person_up_count =0
-    person_down_count =0
     sort_tracker = Sort(max_age=sort_max_age,
                         min_hits=sort_min_hits,
                         iou_threshold=sort_iou_thresh) 
