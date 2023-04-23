@@ -180,3 +180,4 @@ python3 segment/predict.py --weights "runs/yolov7-seg/exp/weights/best.pt" --sou
 - https://medium.com/augmented-startups/train-yolor-on-custom-data-f129391bd3d6
 - https://chr043416.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29
 - https://medium.com/augmented-startups/develop-an-analytics-dashboard-using-streamlit-e6282fa5e0f
+- https://muhammadrizwanmunawarvisionai.blogspot.com/2023/04/maskrcnn-vs-yolov7-a-comparison-of-object-segmentation-algorithms.html
