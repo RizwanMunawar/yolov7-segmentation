@@ -157,7 +157,7 @@ def run(
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
 
                 # Mask plotting ----------------------------------------------------------------------------------------
-                mcolors = [colors(int(6), True) for cls in det[:, 5]]
+                mcolors = [colors(int(cls), True) for cls in det[:, 5]]
                 im_masks = plot_masks(im[i], masks, mcolors)  # image with masks shape(imh,imw,3)
                 annotator.im = scale_masks(im.shape[2:], im_masks, im0.shape)  # scale to original h, w
                 # Mask plotting ----------------------------------------------------------------------------------------
