@@ -1,8 +1,5 @@
 # yolov7-instance-segmentation
 
-## Coming Soon
-- Development of streamlit dashboard for Instance-Segmentation with Object Tracking
-
 ## Code Medium Blog
 - https://chr043416.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29
 
