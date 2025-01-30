@@ -1,7 +1,7 @@
 # yolov7-instance-segmentation
 
 ## Code Medium Blog
-- https://chr043416.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29
+- https://muhammadrizwanmunawar.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29
 
 ## Steps to run Code
 
