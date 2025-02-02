@@ -1,20 +1,19 @@
 # yolov7-instance-segmentation
 
-## Code Medium Blog
-- https://muhammadrizwanmunawar.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29
+[How to train YOLOv7 segmentation model on custom dataset](https://muhammadrizwanmunawar.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29)
 
 ## Steps to run Code
 
 - Clone the repository
-```
+```bash
 git clone https://github.com/RizwanMunawar/yolov7-segmentation.git
 ```
 - Goto the cloned folder.
-```
+```bash
 cd yolov7-segmentation
 ```
 - Create a virtual envirnoment (Recommended, If you dont want to disturb python packages)
-```
+```bash
 ### For Linux Users
 python3 -m venv yolov7seg
 source yolov7seg/bin/activate
@@ -28,17 +27,17 @@ cd ..
 cd ..
 ```
 - Upgrade pip with mentioned command below.
-```
+```bash
 pip install --upgrade pip
 ```
 - Install requirements with mentioned command below.
-```
+```bash
 pip install -r requirements.txt
 ```
 - Download weights from [link](https://github.com/RizwanMunawar/yolov7-segmentation/releases/download/yolov7-segmentation/yolov7-seg.pt) and store in "yolov7-segmentation" directory.
 
 - Run the code with mentioned command below.
-```python
+```bash
 #for segmentation with detection
 python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
 
@@ -67,7 +66,7 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --sa
  </table>
 
 
-## Custom Data Labelling
+### Custom Data Labelling
 
 - I have used [roboflow](https://roboflow.com/) for data labelling. <b>The data labelling for Segmentation will be a Polygon box,While data labelling for object detection will be a bounding box</b>
 
@@ -109,7 +108,7 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --sa
 
 - Once you will complete labelling, you can then export the data and follow mentioned steps below to start training.
 
-## Custom Training
+### Custom Training
 
 - Move your (segmentation custom labelled data) inside "yolov7-segmentation\data" folder by following mentioned structure.
 
@@ -121,7 +120,7 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --sa
 
 - Go to the <b>data</b> folder, create a file with name <b>custom.yaml</b> and paste the mentioned code below inside that.
 
-```
+```yaml
 train: "path to train folder"
 val: "path to validation folder"
 # number of classes
@@ -132,7 +131,7 @@ names: [ 'car']
 
 - Download weights from the <a href= "https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-seg.pt">link</a> and move to <b>yolov7-segmentation</b> folder.
 - Go to the terminal, and run mentioned command below to start training.
-```
+```bash
 python3 segment/train.py --data data/custom.yaml \
                           --batch 4 \
                           --weights "yolov7-seg.pt"
@@ -143,12 +142,12 @@ python3 segment/train.py --data data/custom.yaml \
                           --hyp hyp.scratch-high.yaml
 ```
 
-## Custom Model Detection Command
-```
+### Custom Model Detection Command
+```bash
 python3 segment/predict.py --weights "runs/yolov7-seg/exp/weights/best.pt" --source "videopath.mp4"
 ```
 
-## RESULTS
+### RESULTS
 <table>
   <tr>
     <td>Car Semantic Segmentation</td>
@@ -164,7 +163,7 @@ python3 segment/predict.py --weights "runs/yolov7-seg/exp/weights/best.pt" --sou
  </table>
 
 
-## References
+### References
 - https://github.com/WongKinYiu/yolov7/tree/u7/seg
 - https://github.com/ultralytics/yolov5
 
