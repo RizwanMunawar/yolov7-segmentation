@@ -1,6 +1,6 @@
-# yolov7-instance-segmentation
+# YOLOv7 Instance Segmentation
 
-[How to train YOLOv7 segmentation model on custom dataset](https://muhammadrizwanmunawar.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29)
+[Read the blog](https://muhammadrizwanmunawar.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29) 🚀
 
 ## Steps to run Code
 
@@ -8,12 +8,15 @@
 ```bash
 git clone https://github.com/RizwanMunawar/yolov7-segmentation.git
 ```
+
 - Goto the cloned folder.
 ```bash
 cd yolov7-segmentation
 ```
+
 - Create a virtual envirnoment (Recommended, If you dont want to disturb python packages)
 ```bash
+
 ### For Linux Users
 python3 -m venv yolov7seg
 source yolov7seg/bin/activate
@@ -26,14 +29,17 @@ activate
 cd ..
 cd ..
 ```
+
 - Upgrade pip with mentioned command below.
 ```bash
 pip install --upgrade pip
 ```
+
 - Install requirements with mentioned command below.
 ```bash
 pip install -r requirements.txt
 ```
+
 - Download weights from [link](https://github.com/RizwanMunawar/yolov7-segmentation/releases/download/yolov7-segmentation/yolov7-seg.pt) and store in "yolov7-segmentation" directory.
 
 - Run the code with mentioned command below.
@@ -48,7 +54,7 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --tr
 python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --save-txt
 ```
 
-- Output file will be created in the working directory with name <b>yolov7-segmentation/runs/predict-seg/exp/"original-video-name.mp4"</b>
+- Output file will be created in the working directory with name `yolov7-segmentation/runs/predict-seg/exp/original-video-name.mp4`</b>
 
 ### RESULTS
 <table>
