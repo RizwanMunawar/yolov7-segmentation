@@ -1,6 +1,6 @@
 # YOLOv7 Instance Segmentation
 
-[Read the blog](https://muhammadrizwanmunawar.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29) 🚀
+🚀 [Read the blog](https://muhammadrizwanmunawar.medium.com/train-yolov7-segmentation-on-custom-data-b91237bd2a29) 
 
 ## Steps to run Code
 
