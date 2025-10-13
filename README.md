@@ -10,19 +10,19 @@
 git clone https://github.com/RizwanMunawar/yolov7-segmentation.git
 ```
 
-- Goto the cloned folder.
+- Go to the cloned folder.
 ```bash
 cd yolov7-segmentation
 ```
 
-- Create a virtual envirnoment (Recommended, If you dont want to disturb python packages)
+- Create a virtual environment (Recommended, if you don't want to disturb Python packages)
 ```bash
 
 ### For Linux Users
 python3 -m venv yolov7seg
 source yolov7seg/bin/activate
 
-### For Window Users
+### For Windows Users
 python3 -m venv yolov7seg
 cd yolov7seg
 cd Scripts
@@ -31,19 +31,19 @@ cd ..
 cd ..
 ```
 
-- Upgrade pip with mentioned command below.
+- Upgrade pip with the mentioned command below.
 ```bash
 pip install --upgrade pip
 ```
 
-- Install requirements with mentioned command below.
+- Install requirements with the mentioned command below.
 ```bash
 pip install -r requirements.txt
 ```
 
 - Download weights from [link](https://github.com/RizwanMunawar/yolov7-segmentation/releases/download/yolov7-segmentation/yolov7-seg.pt) and store in "yolov7-segmentation" directory.
 
-- Run the code with mentioned command below.
+- Run the code with the mentioned command below.
 ```bash
 #for segmentation with detection
 python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4"
@@ -55,7 +55,7 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --tr
 python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --save-txt
 ```
 
-- Output file will be created in the working directory with name `yolov7-segmentation/runs/predict-seg/exp/original-video-name.mp4`</b>
+- Output file will be created in the working directory with name `runs/predict-seg/exp/original-video-name.mp4`</b>
 
 ### RESULTS
 <table>
@@ -75,20 +75,20 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --sa
 
 ### Custom Data Labelling
 
-- I have used [roboflow](https://roboflow.com/) for data labelling. <b>The data labelling for Segmentation will be a Polygon box,While data labelling for object detection will be a bounding box</b>
+- I have used [roboflow](https://roboflow.com/) for data labelling. <b>The data labelling for Segmentation will be a Polygon box, while data labelling for object detection will be a bounding box</b>
 
-- Go to the [link](https://app.roboflow.com/my-personal-workspace/createSample) and create a new workspace. Make sure to login with roboflow account.
+- Go to the [link](https://app.roboflow.com/my-personal-workspace/createSample) and create a new workspace. Make sure to log in with your Roboflow account.
 
 
 ![1](https://user-images.githubusercontent.com/62513924/190390384-db8f71fa-e963-4ee6-aaca-c49e993c64ae.png)
 
 
-- Once you will click on <b>create workspace</b>, You will see the popup as shown below to upload the dataset.
+- Once you click on <b>create workspace</b>, you will see the pop-up as shown below to upload the dataset.
 
 ![2](https://user-images.githubusercontent.com/62513924/190390882-fe08559d-ef47-450e-8613-2de899fffa4c.png)
 
 
-- Click on upload dataset and roboflow will ask for workspace name as shown below. Fill that form and then click on <b>Create Private Project</b>
+- Click on upload dataset, and Roboflow will ask for the workspace name as shown below. Fill that form and then click on <b>Create Private Project</b>
 - Note: Make sure to select <b>Instance Segmentation</b> Option in below image.
  ![dataset](https://user-images.githubusercontent.com/62513924/190853038-612791d0-9b33-4222-b28a-63ac4c13ed83.png)
 
@@ -97,7 +97,7 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --sa
 
 ![Screenshot 2022-09-17 155330](https://user-images.githubusercontent.com/62513924/190853135-887b389c-2356-4435-a946-867bb05ac4f2.png)
 
-- Once files will upload, you can click on <b>Finish Uploading</b>.
+- Once the files are uploaded, you can click on <b>Finish Uploading</b>.
 
 - Roboflow will ask you to assign Images to someone, click on <b>Assign Images</b>.
 
@@ -113,17 +113,13 @@ python3 segment/predict.py --weights yolov7-seg.pt --source "videopath.mp4" --sa
 ![10](https://user-images.githubusercontent.com/62513924/190394353-d7dd7b7f-7a07-4738-99b6-1d5ae66b5bca.png)
 
 
-- Once you will complete labelling, you can then export the data and follow mentioned steps below to start training.
+- Once you have completed labelling, you can then export the data and follow the steps mentioned below to start training.
 
 ### Custom Training
 
-- Move your (segmentation custom labelled data) inside "yolov7-segmentation\data" folder by following mentioned structure.
-
-
+- Move your (segmentation custom labelled data) inside the `yolov7-segmentation/data` folder by following the mentioned structure.
 
 ![ss](https://user-images.githubusercontent.com/62513924/190388927-62a3ee84-bad8-4f59-806f-1185acdc8acb.png)
-
-
 
 - Go to the <b>data</b> folder, create a file with name <b>custom.yaml</b> and paste the mentioned code below inside that.
 
@@ -137,7 +133,7 @@ names: [ 'car']
 ```
 
 - Download weights from the <a href= "https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-seg.pt">link</a> and move to <b>yolov7-segmentation</b> folder.
-- Go to the terminal, and run mentioned command below to start training.
+- Go to the terminal, and run the mentioned command below to start training.
 ```bash
 python3 segment/train.py --data data/custom.yaml \
                           --batch 4 \
